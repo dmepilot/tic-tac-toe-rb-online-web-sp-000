@@ -1,11 +1,11 @@
 WIN_COMBINATIONS = [
-  [0,1,2], #top row 
+  [0,1,2], #top row
   [3,4,5], #middle row
   [6,7,8], #bottom row
-  [0,3,6], #left column 
+  [0,3,6], #left column
   [1,4,7], #middle column
   [2,5,8], #right column
-  [0,4,8], #diagonal 1 
+  [0,4,8], #diagonal 1
   [2,4,6], # diagonal 2
   ]
 
@@ -15,35 +15,31 @@ def play(board)
   turn(board)
 end
   if won?(board) != false
-    puts "Congratulations #{winner(board)}!" 
+    puts "Congratulations #{winner(board)}!"
   elsif draw?(board)
     puts "Cat's Game!"
   end
 end
 
-
-
-
-  
 def position_taken?(board, index)
   !(board[index].nil? || board[index] == " ")
 end
 
 def won?(board)
   WIN_COMBINATIONS.any? do |win_combination|
-   if board[win_combination[0]] == "X" && board[win_combination[1]] == "X" && board[win_combination[2]] == "X" 
+    if board[win_combination[0]] == "X" && board[win_combination[1]] == "X" && board[win_combination[2]] == "X"
      return win_combination
     elsif board[win_combination[0]]== "O" && board[win_combination[1]] == "O" && board[win_combination[2]] == "O"
      return win_combination
-   else 
-     false 
+   else
+     false
     end
   end
 end
 
 def full?(board)
   if board.any?{|element| element == " " } then return false
-  else 
+  else
   return true
   end
 end
@@ -55,14 +51,14 @@ def draw?(board)
 end
 
 def over?(board)
-  if draw?(board) == true || (won?(board) != false && full?(board) == true) || (won?(board) != false && full?(board) != true) 
+  if draw?(board) == true || (won?(board) != false && full?(board) == true) || (won?(board) != false && full?(board) != true)
     then return true
   end
 end
-  
+
 def winner(board)
   WIN_COMBINATIONS.detect do |win_combination|
-    if board[win_combination[0]] == "X" && board[win_combination[1]] == "X" && board[win_combination[2]] == "X" 
+    if board[win_combination[0]] == "X" && board[win_combination[1]] == "X" && board[win_combination[2]] == "X"
       puts "X"
       return "X"
     elsif board[win_combination[0]]== "O" && board[win_combination[1]] == "O" && board[win_combination[2]] == "O"
@@ -73,10 +69,10 @@ def winner(board)
 end
 
 def turn_count(board)
-  counter = 0 
+  counter = 0
   board.each do |space|
     if space != " "
-    then counter += 1 
+    then counter += 1
     end
   end
   return counter
@@ -85,7 +81,7 @@ end
 def current_player(board)
   if (turn_count(board) % 2 == 0) then return "X"
   elsif (turn_count(board) % 2 == 1) then return "O"
-  end  
+  end
 end
 
 def turn(board)
@@ -99,7 +95,7 @@ def turn(board)
   else turn(board)
   end
 end
-  
+
 def display_board(board)
   puts " #{board[0]} | #{board[1]} | #{board[2]} "
   puts "-----------"
@@ -109,7 +105,7 @@ def display_board(board)
 end
 
 def valid_move?(board, index)
-  return TRUE if index.between?(0,8) && (board[index] != ("X" || "O") )
+  return true if index.between?(0,8) && !position_taken?(board, index)
 end
 
 def input_to_index(input)
